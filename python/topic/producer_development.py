@@ -3,7 +3,12 @@ import pika
 
 # Setup connection
 credentials = pika.PlainCredentials('pmdcosta', 'password')
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.17.0.2', credentials=credentials))
+
+ssl_option = {'certfile': '/home/pmdcosta/PycharmProjects/rabbit/ssl/client/cert.pem',
+              'keyfile': '/home/pmdcosta/PycharmProjects/rabbit/ssl/client/key.pem'}
+
+connection = pika.BlockingConnection(
+    pika.ConnectionParameters(host='172.17.0.2', port=5671, credentials=credentials, ssl=True, ssl_options=ssl_option))
 channel = connection.channel()
 
 # Create Exchange
