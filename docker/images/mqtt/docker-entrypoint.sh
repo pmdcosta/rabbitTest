@@ -154,4 +154,6 @@ if [ "$1" = 'rabbitmq-server' ]; then
 	fi
 fi
 
+cat /etc/rabbitmq/rabbitmq.config
+
 exec "$@"
