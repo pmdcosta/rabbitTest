@@ -97,27 +97,11 @@ if [ "$1" = 'rabbitmq-server' ]; then
 				  },
 				  { rabbitmq_management, [
 				      { listener, [
-			EOF
-
-			if [ "$ssl" ]; then
-				cat >> /etc/rabbitmq/rabbitmq.config <<-EOS
-				      { port, 15671 },
-				      { ssl, true },
-				      { ssl_opts, [
-				          { certfile,   "$RABBITMQ_SSL_CERT_FILE" },
-				          { keyfile,    "$RABBITMQ_SSL_KEY_FILE" },
-				          { cacertfile, "$RABBITMQ_SSL_CA_FILE" },
-				      { verify,   verify_none },
-				      { fail_if_no_peer_cert, false } ] } ] }
-				EOS
-			else
-				cat >> /etc/rabbitmq/rabbitmq.config <<-EOS
-				        { port, 15672 },
+					    { port, 15672 },
 				        { ssl, false }
-				        ]
-				      }
-				EOS
-			fi
+					        ]
+					      }
+			EOF
 		fi
 	fi
 
@@ -129,9 +113,20 @@ if [ "$1" = 'rabbitmq-server' ]; then
 			  },
 			  { rabbitmq_mqtt, [
 			      {allow_anonymous, false},
-			      {tcp_listeners, [1883]},
-			      {subscription_ttl, 1800000}
+			      {subscription_ttl, 1800000},
 		EOF
+
+		if [ "$ssl" ]; then
+			cat >> /etc/rabbitmq/rabbitmq.config <<-EOS
+			      { tcp_listeners, [ ]},
+			      {ssl_listeners, [8883]}
+			EOS
+		else
+			cat >> /etc/rabbitmq/rabbitmq.config <<-EOS
+			      {tcp_listeners, [1883]},
+			      {ssl_listeners, [ ] }
+			EOS
+		fi
 	fi
 
 	cat >> /etc/rabbitmq/rabbitmq.config <<-'EOF'
