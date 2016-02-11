@@ -5,6 +5,7 @@ import pika
 # Whenever a message is received, this function is called
 def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 # Setup connection
@@ -17,14 +18,14 @@ connection = pika.BlockingConnection(
 channel = connection.channel()
 
 # Create a temporary queue with random name
-result = channel.queue_declare(exclusive=True)
+result = channel.queue_declare(queue='consumer1', durable=True)
 queue_name = result.method.queue
 
 # Bind the queue to the exchange
 channel.queue_bind(exchange='amq.topic', queue=queue_name, routing_key="reports")
 
 # Receive message from queue and execute call callback function
-channel.basic_consume(callback, queue=queue_name, no_ack=True)
+channel.basic_consume(callback, queue=queue_name)
 
 # Never ending loop waiting for messages
 print(' [*] Waiting for messages. To exit press CTRL+C')
