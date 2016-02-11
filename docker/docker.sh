@@ -24,4 +24,6 @@ docker run -d \
     -e RABBITMQ_SSL_CA_FILE=/ssl/ca/cacert.pem \
     rabbitmqtt
 
+# Custom image
+docker run -d --hostname rabbit --name rabbitmq pmdcosta/rabbitmq
 

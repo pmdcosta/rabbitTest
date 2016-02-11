@@ -8,10 +8,9 @@ def on_connect(client, userdata, flags, rc):
 
 client = mqtt.Client()
 
-client.username_pw_set("pmdcosta", password="password")
 client.tls_set(ca_certs='/home/pmdcosta/PycharmProjects/rabbit/ssl/ca/cacert.pem',
-               certfile='/home/pmdcosta/PycharmProjects/rabbit/ssl/client/cert.pem',
-               keyfile='/home/pmdcosta/PycharmProjects/rabbit/ssl/client/key.pem')
+               certfile='/home/pmdcosta/PycharmProjects/rabbit/ssl/pmdcosta/cert.pem',
+               keyfile='/home/pmdcosta/PycharmProjects/rabbit/ssl/pmdcosta/key.pem')
 client.on_connect = on_connect
 
 client.connect("server", 8883, 60)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pika
+from pika.credentials import ExternalCredentials
 
 
 # Whenever a message is received, this function is called
@@ -9,12 +10,12 @@ def callback(ch, method, properties, body):
 
 
 # Setup connection
-credentials = pika.PlainCredentials('pmdcosta', 'password')
-ssl_option = {'certfile': '/home/pmdcosta/PycharmProjects/rabbit/ssl/client/cert.pem',
-              'keyfile': '/home/pmdcosta/PycharmProjects/rabbit/ssl/client/key.pem'}
+ssl_option = {'certfile': '/home/pmdcosta/PycharmProjects/rabbit/ssl/pmdcosta/cert.pem',
+              'keyfile': '/home/pmdcosta/PycharmProjects/rabbit/ssl/pmdcosta/key.pem'}
 
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='172.17.0.2', port=5671, credentials=credentials, ssl=True, ssl_options=ssl_option))
+    pika.ConnectionParameters(host='172.17.0.2', port=5671, credentials=ExternalCredentials(), ssl=True,
+                              ssl_options=ssl_option))
 channel = connection.channel()
 
 # Create a temporary queue with random name
