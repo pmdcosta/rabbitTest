@@ -34,9 +34,11 @@ COPY cert.pem /ssl/server/
 COPY key.pem /ssl/server/
 COPY cacert.pem /ssl/ca/
 
-# Set Erlang Cookie
+# Set Clustering
 Copy .erlang.cookie /var/lib/rabbitmq/
 RUN chmod 600 /var/lib/rabbitmq/.erlang.cookie
+Copy cluster.sh /opt/rabbitmq/sbin/
+RUN chmod +x /opt/rabbitmq/sbin/cluster.sh
 
 # Set Plugins
 RUN /opt/rabbitmq/sbin/rabbitmq-plugins enable --offline rabbitmq_management
