@@ -16,6 +16,6 @@ client.username_pw_set("pmdcosta", password="password")
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("172.17.0.2", 1883, 60)
+client.connect("server", 1883, 60)
 client.subscribe("reports")
 client.loop_forever()

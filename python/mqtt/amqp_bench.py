@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 import pika
 from pika.credentials import ExternalCredentials
-
-
-# Whenever a message is received, this function is called
-def callback(ch, method, properties, body):
-    #print(" [x] Received %r" % body)
-    ch.basic_ack(delivery_tag=method.delivery_tag)
+import time
 
 
 # Setup connection
@@ -25,13 +20,10 @@ queue_name = result.method.queue
 # Bind the queue to the exchange
 channel.queue_bind(exchange='amq.topic', queue=queue_name, routing_key="reports")
 
-# Receive message from queue and execute call callback function
-channel.basic_consume(callback, queue=queue_name)
+i = 0
+start = int(time.time())
+while channel.basic_get(queue=queue_name, no_ack=False)[0] is not None:
+    i += 1
+end = int(time.time())
 
-# Never ending loop waiting for messages
-print(' [*] Waiting for messages. To exit press CTRL+C')
-try:
-    channel.start_consuming()
-except KeyboardInterrupt:
-    print("Shutting Down...")
-    channel.close()
+print('Took', (end - start), 'seconds to receive', i, 'messages')
