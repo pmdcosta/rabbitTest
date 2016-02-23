@@ -1,7 +1,7 @@
 [ ca ]
-default_ca = qoldca
+default_ca = qold_ca
 
-[ qoldca ]
+[ qold_ca ]
 dir = .
 certificate = $dir/cacert.pem
 database = $dir/index.txt
@@ -11,12 +11,12 @@ serial = $dir/serial
 
 default_crl_days = 7
 default_days = 7300
-default_md = sha1
+default_md = sha256
 
-policy = qoldca_policy
+policy = qold_ca_policy
 x509_extensions = certificate_extensions
 
-[ qoldca_policy ]
+[ qold_ca_policy ]
 commonName = supplied
 stateOrProvinceName = optional
 countryName = optional
@@ -30,7 +30,7 @@ basicConstraints = CA:false
 [ req ]
 default_bits = 2048
 default_keyfile = ./private/cakey.pem
-default_md = sha1
+default_md = sha256
 prompt = yes
 distinguished_name = root_ca_distinguished_name
 x509_extensions = root_ca_extensions
