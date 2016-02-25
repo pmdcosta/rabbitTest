@@ -1,0 +1,9 @@
+Producer Handshake: 
+2659 bytes	3432 bytes
+
+Producer Message:
+126 bytes	366 bytes
+
+Producer Idle:
+182 bytes	290 bytes
+

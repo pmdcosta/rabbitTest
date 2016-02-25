@@ -19,3 +19,6 @@ openssl req -new -key key.pem -out req.pem -outform PEM -subj "/C=PT/ST=Coimbra/
 # Sign the cert
 (cd ${CA_ROOT} && openssl ca -config openssl.cnf -in ${CERT_ROOT}/req.pem -out ${CERT_ROOT}/cert.pem -notext -batch -extensions client_ca_extensions)
 rm req.pem
+
+# Copy CACert
+cp ${CA_ROOT}/cacert.pem .

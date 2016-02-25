@@ -48,10 +48,6 @@ RUN /opt/rabbitmq/sbin/rabbitmq-plugins enable --offline rabbitmq_management
 RUN /opt/rabbitmq/sbin/rabbitmq-plugins enable rabbitmq_mqtt
 RUN /opt/rabbitmq/sbin/rabbitmq-plugins enable rabbitmq_auth_mechanism_ssl
 
-# Add boot script
-Copy start-rabbit.sh /opt/rabbitmq/sbin/
-RUN chmod +x /opt/rabbitmq/sbin/start-rabbit.sh
-
 # Define mount points.
 VOLUME ["/data/log", "/data/mnesia"]
 
