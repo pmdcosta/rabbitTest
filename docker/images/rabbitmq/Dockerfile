@@ -14,7 +14,7 @@ ENV RABBITMQ_HOME=/opt/rabbitmq \
 ENV RABBITMQ_LOGS=- RABBITMQ_SASL_LOGS=-
 
 # Install Dependencies
-RUN apk add --update curl tar xz bash nano
+RUN apk add --update curl tar xz bash nano openssl openssl-dev ca-certificates
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
@@ -35,12 +35,11 @@ RUN mv /opt/rabbitmq_server-${RABBIT_VERSION} /opt/rabbitmq
 
 # Set Configurations
 COPY rabbitmq.config /opt/rabbitmq/etc/rabbitmq/
-
-# Set SSL certs
-RUN mkdir /ssl
+COPY start-rabbit.sh /usr/bin/
+RUN chmod +x /usr/bin/start-rabbit.sh
 
 # Set Clustering Cookie
-Copy .erlang.cookie /var/lib/rabbitmq/
+Copy erlang.cookie /var/lib/rabbitmq/.erlang.cookie
 RUN chmod 600 /var/lib/rabbitmq/.erlang.cookie
 
 # Set Plugins
@@ -53,4 +52,4 @@ VOLUME ["/data/log", "/data/mnesia"]
 
 # Ports and Entrypoint
 EXPOSE 5671 5672 15671 15672 1883 8883
-CMD ["/opt/rabbitmq/sbin/rabbitmq-server"]
+CMD ["start-rabbit.sh"]

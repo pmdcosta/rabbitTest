@@ -4,7 +4,7 @@ import time
 
 server = "rabbitmq_1"
 port = 5671
-vhost = "/"
+vhost = "development"
 
 exchangeName = "ingestion"
 queueName = "consumer_01"
