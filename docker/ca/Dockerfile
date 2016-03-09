@@ -12,5 +12,7 @@ COPY openssl.cnf /ssl/ca
 COPY create-ca.sh /ssl/ca
 RUN chmod +x /ssl/ca/create-ca.sh
 
+WORKDIR /ssl/ca
+
 # Entrypoint
 CMD ["/ssl/ca/create-ca.sh"]

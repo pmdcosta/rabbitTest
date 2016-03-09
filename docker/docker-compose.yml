@@ -12,12 +12,16 @@ services:
     networks:
       - qold
 
-  rabbit:
+  consul:
+    image: pmdcosta/consul
+    networks:
+      - qold
+
+  rabbitmq:
     image: pmdcosta/rabbitmq
-    hostname: rabbit
+    networks:
+      - qold
     depends_on:
       - ca
     volumes_from:
       - ca
-    networks:
-      - qold

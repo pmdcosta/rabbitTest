@@ -1,9 +1,0 @@
-#!/bin/bash
-
-cd ca
-docker build -t pmdcosta/ca .
-cd ../consul
-docker build -t pmdcosta/consul .
-cd ../rabbitmq
-docker build -t pmdcosta/rabbitmq .
-cd ..
