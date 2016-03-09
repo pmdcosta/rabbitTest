@@ -1,0 +1,21 @@
+version: '2'
+
+networks:
+  qold:
+    driver: bridge
+
+services:
+  consul:
+    image: gavinmroy/alpine-consul
+    networks:
+      - qold
+
+  rabbit:
+    image: rabcon
+    networks:
+      - qold
+    environment:
+      - AUTOCLUSTER_TYPE=consul
+      - CONSUL_SCHEME=http
+      - CONSUL_HOST=localhost
+      - CONSUL_PORT=8500

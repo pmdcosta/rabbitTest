@@ -11,13 +11,4 @@ services:
       - /ssl/ca
     networks:
       - qold
-
-  rabbit:
-    image: pmdcosta/rabbitmq
-    hostname: rabbit
-    depends_on:
-      - ca
-    volumes_from:
-      - ca
-    networks:
-      - qold
+    command: bash

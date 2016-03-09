@@ -1,0 +1,49 @@
+FROM pmdcosta/consul
+MAINTAINER Pedro Costa
+
+# Define RabbitMQ env
+ENV RABBIT_VERSION 3.5.7
+ENV RABBITMQ_HOME=/opt/rabbitmq \
+    PLUGINS_DIR=/opt/rabbitmq/plugins \
+    ENABLED_PLUGINS_FILE=/opt/rabbitmq/etc/rabbitmq/enabled_plugins \
+    RABBITMQ_MNESIA_BASE=/data/mnesia
+
+# Set logs to StdOut
+ENV RABBITMQ_LOGS=- RABBITMQ_SASL_LOGS=-
+
+# Install RabbitMQ dependencies
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+RUN apk add erlang erlang erlang-mnesia erlang-public-key erlang-crypto erlang-ssl \
+    erlang-sasl erlang-asn1 erlang-inets erlang-os-mon erlang-xmerl erlang-eldap \
+    erlang-syntax-tools --update-cache --allow-untrusted
+
+# Install RabbitMQ
+WORKDIR /opt/
+RUN curl -Lv -o /opt/rabbitmq-server-generic-unix-${RABBIT_VERSION}.tar.gz https://www.rabbitmq.com/releases/rabbitmq-server/v${RABBIT_VERSION}/rabbitmq-server-generic-unix-${RABBIT_VERSION}.tar.gz
+RUN tar -zxvf /opt/rabbitmq-server-generic-unix-${RABBIT_VERSION}.tar.gz
+RUN rm -f /opt/rabbitmq-server-generic-unix-${RABBIT_VERSION}.tar.gz
+RUN touch /opt/rabbitmq_server-${RABBIT_VERSION}/etc/rabbitmq/enabled_plugins && \
+    /opt/rabbitmq_server-${RABBIT_VERSION}/sbin/rabbitmq-plugins enable --offline rabbitmq_management
+RUN apk del --purge tar && rm -Rf /var/cache/apk/*
+RUN mv /opt/rabbitmq_server-${RABBIT_VERSION} /opt/rabbitmq
+
+# Set RabbitMQ configurations
+Copy erlang.cookie /var/lib/rabbitmq/.erlang.cookie
+RUN chmod 600 /var/lib/rabbitmq/.erlang.cookie
+COPY rabbitmq.config /opt/rabbitmq/etc/rabbitmq/
+
+# Create entrypoint
+COPY start-rabbit.sh /usr/bin/
+RUN chmod +x /usr/bin/start-rabbit.sh
+
+# Set Plugins
+ADD https://github.com/aweber/rabbitmq-autocluster/releases/download/0.4.1/autocluster-0.4.1.ez /opt/rabbitmq/plugins/
+RUN /opt/rabbitmq/sbin/rabbitmq-plugins enable --offline rabbitmq_management && \
+    /opt/rabbitmq/sbin/rabbitmq-plugins enable rabbitmq_mqtt && \
+    /opt/rabbitmq/sbin/rabbitmq-plugins enable rabbitmq_auth_mechanism_ssl && \
+    /opt/rabbitmq/sbin/rabbitmq-plugins enable --offline autocluster
+
+# Ports and Entrypoint
+#EXPOSE 5671 5672 15671 15672 1883 8883
+CMD ["start-rabbit.sh"]
