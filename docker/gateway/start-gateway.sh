@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Check if SSL certs are present
-if [ ! -f /ssl/client/cert.pem ] || [ ! -f /ssl/client/key.pem ]; then
+if [ ! -f /ssl/$HOSTNAME/cert.pem ] || [ ! -f /ssl/$HOSTNAME/key.pem ]; then
     echo "=============== Creating SSL certificates ================"
-    mkdir -p /ssl/client
-	cd /ssl/client
+    mkdir -p /ssl/$HOSTNAME
+	cd /ssl/$HOSTNAME
 
 	CN=$HOSTNAME
-	CERT_ROOT=/ssl/client
+	CERT_ROOT=/ssl/$HOSTNAME
 	CA_ROOT=/ssl/ca
 
 	# Create client key and cert
@@ -19,8 +19,11 @@ if [ ! -f /ssl/client/cert.pem ] || [ ! -f /ssl/client/key.pem ]; then
 	rm req.pem
 fi
 
+echo "================== Install Dependencies ====================="
+pip install -r /qold/qold-hub-firmware/requirements.txt
+
 echo "================== Starting server_producer ================="
-/qold/device_receiver python server_producer &
+/qold/qold-hub-firmware/src python qold_input.py &
 
 echo "================== Starting device_consumer ================="
-/qold/device_receiver python device_consumer
+/qold/qold-hub-firmware/src python qold_output.py

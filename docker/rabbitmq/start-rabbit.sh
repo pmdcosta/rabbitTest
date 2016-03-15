@@ -6,7 +6,7 @@ if [ ! -f /ssl/server/cert.pem ] || [ ! -f /ssl/server/key.pem ]; then
     mkdir -p /ssl/server
 	cd /ssl/server
 
-	CN=$HOSTNAME
+	CN=rabbitmq
 	CERT_ROOT=/ssl/server
 	CA_ROOT=/ssl/ca
 

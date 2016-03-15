@@ -5,7 +5,7 @@ MAINTAINER Pedro Costa
 RUN apk add --update curl tar bash nano openssl-dev ca-certificates
 
 # Install python
-RUN apk add --update python python-dev py-pip build-base gcc build-essentials
+RUN apk add --update python python-dev py-pip build-base gcc
 RUN pip install --upgrade pip
 
 # Set env
@@ -20,7 +20,7 @@ ENV GATEWAY_SERVER=rabbitmq \
 
 # Add Firmware
 RUN mkdir /qold
-COPY device_receiver /qold
+COPY qold-hub-firmware /qold
 WORKDIR /qold/
 
 # Install app dependencies
@@ -30,4 +30,4 @@ WORKDIR /qold/
 ADD start-gateway.sh /usr/bin/
 RUN chmod +x /usr/bin/start-gateway.sh
 
-CMD ["/ssl/ca/start-gateway.sh"]
+CMD ["start-gateway.sh"]
