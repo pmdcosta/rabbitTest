@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    name: rabbitmq
+  name: rabbitmq
+spec:
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      nodeSelector:
+        app: rabbitmq
+      containers:
+        image: pmdcosta/rabbitmq:latest
+        name: rabbitmq
+        ports:
+          - containerPort: 5671
+              name: amqp_ssl
+          - containerPort: 15672
+              name: web_management
+          - containerPort: 8883
+              name: mqtt_ssl
+        resources:
+          request:
+            cpu: 0.1
+            memory: 200m
+        volumeMounts:
+          - mountPath: /opt/rabbitmq
+            name: data
+          - mountPath: /ssl
+            name: ssl
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: ssl
+          secret:
+            secretName: rabbitmq-ssl
