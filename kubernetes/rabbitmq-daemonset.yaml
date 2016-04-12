@@ -15,6 +15,7 @@ spec:
       containers:
         - name: rabbitmq
           image: pmdcosta/rabbitmq:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5671
               name: amqp-ssl

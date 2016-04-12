@@ -5,10 +5,14 @@ metadata:
   labels:
     app: rabbitmq
 spec:
-  externalIPs: []
+  externalIPs: [139.59.175.213]
   ports:
   - port: 5671
+    name: amqp-ssl
   - port: 15672
+    name: web-management
   - port: 8883
+    name: mqtt-ssl
   selector:
     app: rabbitmq
+
