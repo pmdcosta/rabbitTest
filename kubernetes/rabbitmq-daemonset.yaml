@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  labels:
-    name: rabbitmq
   name: rabbitmq
+  labels:
+    app: rabbitmq
 spec:
   template:
     metadata:
@@ -13,24 +13,26 @@ spec:
       nodeSelector:
         app: rabbitmq
       containers:
-        image: pmdcosta/rabbitmq:latest
-        name: rabbitmq
-        ports:
-          - containerPort: 5671
-              name: amqp_ssl
-          - containerPort: 15672
-              name: web_management
-          - containerPort: 8883
-              name: mqtt_ssl
-        resources:
-          request:
-            cpu: 0.1
-            memory: 200m
-        volumeMounts:
-          - mountPath: /opt/rabbitmq
-            name: data
-          - mountPath: /ssl
-            name: ssl
+        - name: rabbitmq
+          image: pmdcosta/rabbitmq:latest
+          ports:
+            - containerPort: 5671
+              name: amqp-ssl
+            - containerPort: 15672
+              name: web-management
+            - containerPort: 8883
+              name: mqtt-ssl
+          env:
+            - name: EARLANG_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: earlang-cookie
+                  key: cookie
+          volumeMounts:
+            - mountPath: /data
+              name: data
+            - mountPath: /ssl
+              name: ssl
       volumes:
         - name: data
           emptyDir: {}

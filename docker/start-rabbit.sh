@@ -6,6 +6,9 @@ hostname -F /etc/hostname
 export RABBITMQ_USE_LONGNAME=true
 export RABBITMQ_NODENAME=rabbit@$HOSTNAME
 
+echo "========================== Set earlang-cookie =========================="
+echo $EARLANG_COOKIE > /root/.earlang.cookie
+
 
 echo "========================== Enable pluggins ============================="
 /opt/rabbitmq/sbin/rabbitmq-plugins enable --offline rabbitmq_management

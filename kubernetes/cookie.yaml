@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: earlang-cookie
+type: Opaque
+data:
+  cookie: VHdpdkVyWWliTDJpczhoYlpna2J3Z2xMNURRbDFPQkFBek1RY3JUaWlTNXZFTTYK
