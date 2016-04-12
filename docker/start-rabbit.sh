@@ -21,8 +21,8 @@ do
 	hosts+="rabbit@"$IP
 done
 hosts=$(echo $hosts | tr ' ' ,)
-sed -i -e "s/cluster_nodes, {\[\]/cluster_nodes, {\[$hosts\]/g" /opt/rabbitmq/etc/rabbitmq/rabbit.config
-
+sed -i -e "s/cluster_nodes, {\[\]/cluster_nodes, {\[$hosts\]/g" /opt/rabbitmq/etc/rabbitmq/rabbitmq.config
+cat /opt/rabbitmq/etc/rabbitmq/rabbitmq.config
 
 echo "==================== Starting RabbitMQ ==================="
 /opt/rabbitmq/sbin/rabbitmq-server
