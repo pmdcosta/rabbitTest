@@ -38,6 +38,6 @@ RUN mkdir -p /ssl/server && \
 #VOLUME ["/data"]
 
 # Create entrypoint
-ADD start-rabbit.sh /usr/bin/
+ADD config/start-rabbit.sh /usr/bin/
 RUN chmod +x /usr/bin/start-rabbit.sh
 CMD ["start-rabbit.sh"]
