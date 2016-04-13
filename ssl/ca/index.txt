@@ -1,4 +1,0 @@
-V	360218155109Z		01	unknown	/CN=rabbitmq_1/ST=Coimbra/C=PT/O=Whitesmith/OU=Qold
-V	360218155357Z		02	unknown	/CN=1234/ST=Coimbra/C=PT/O=Whitesmith/OU=Gateway
-V	360218155422Z		03	unknown	/CN=pmdcosta/ST=Coimbra/C=PT/O=Whitesmith/OU=Gateway
-V	360407040132Z		04	unknown	/CN=rabbitmq.qold.co/ST=Coimbra/C=PT/O=Whitesmith/OU=Qold

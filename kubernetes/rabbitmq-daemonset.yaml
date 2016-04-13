@@ -32,7 +32,9 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: data
-            - mountPath: /ssl
+            - mountPath: /ssl/ca
+              name: ca
+            - mountPath: /ssl/server
               name: ssl
       volumes:
         - name: data
@@ -40,3 +42,6 @@ spec:
         - name: ssl
           secret:
             secretName: rabbitmq-ssl
+        - name: ca
+            secretName: qold-ca
+        

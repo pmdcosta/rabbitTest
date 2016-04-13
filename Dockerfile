@@ -26,16 +26,18 @@ RUN curl -Lv -o /opt/rabbitmq-server-generic-unix-${RABBIT_VERSION}.tar.xz https
     tar -xf /opt/rabbitmq-server-generic-unix-${RABBIT_VERSION}.tar && \
     rm -f /opt/rabbitmq-server-generic-unix-${RABBIT_VERSION}.tar && \
     touch /opt/rabbitmq_server-${RABBIT_VERSION}/etc/rabbitmq/enabled_plugins && \
-    apk del --purge tar && \
     rm -Rf /var/cache/apk/* && \
     mv /opt/rabbitmq_server-${RABBIT_VERSION} /opt/rabbitmq
 
 # Set RabbitMQ configurations
-ADD rabbitmq.config /opt/rabbitmq/etc/rabbitmq/
+ADD config/rabbitmq.config /opt/rabbitmq/etc/rabbitmq/
+RUN mkdir -p /ssl/server && \
+    mkdir -p /ssl/ca
+
+# Persistence
+#VOLUME ["/data"]
 
 # Create entrypoint
 ADD start-rabbit.sh /usr/bin/
 RUN chmod +x /usr/bin/start-rabbit.sh
-
-# Entrypoint
 CMD ["start-rabbit.sh"]
