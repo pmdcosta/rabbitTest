@@ -43,5 +43,6 @@ spec:
           secret:
             secretName: rabbitmq-ssl
         - name: ca
+          secret:
             secretName: qold-ca
         

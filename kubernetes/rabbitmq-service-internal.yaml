@@ -5,7 +5,6 @@ metadata:
   labels:
     app: rabbitmq
 spec:
-  externalIPs: [139.59.175.213]
   ports:
   - port: 5671
     name: amqp-ssl
