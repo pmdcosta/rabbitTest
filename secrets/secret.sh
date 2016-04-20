@@ -1,5 +1,5 @@
 # RabbitMQ server credentials
-kubectl create secret generic rabbitmq-ssl --from-file=~/secrets/rabbitmq/server.pem --from-file=~/secrets/rabbitmq/server-key.pem
+kubectl create secret generic rabbitmq-ssl --from-file=server.pem --from-file=server-key.pem
 
 # Cookie for RabbitMQ clustering authentication
-kubectl create -f ./cookie.yaml
+kubectl create -f cookie.yaml

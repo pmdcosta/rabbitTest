@@ -45,4 +45,4 @@ spec:
         - name: ca
           secret:
             secretName: qold-ca
-        
+
