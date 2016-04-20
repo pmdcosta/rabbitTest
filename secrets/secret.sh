@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # RabbitMQ server credentials
 kubectl create secret generic rabbitmq-ssl --from-file=server.pem --from-file=server-key.pem
 
