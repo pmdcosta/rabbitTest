@@ -1,5 +1,5 @@
 # RabbitMQ
-RabbitMQ Docker images and base clients
+RabbitMQ Docker images
 
 
 ## Label Nodes
