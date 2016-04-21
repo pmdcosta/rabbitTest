@@ -1,19 +1,22 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: rabbitmq
+  name: rabbitmq-dev
   labels:
     app: rabbitmq
-    env: production
+    env: development
 spec:
   externalIPs: [139.59.166.134,139.59.166.152]
   ports:
-  - port: 5671
+  - port: 5672
+    targetPort: "amqp-ssl"
     name: amqp-ssl
-  - port: 15672
+  - port: 15673
+    targetPort: "web-management"
     name: web-management
-  - port: 8883
+  - port: 8884
+    targetPort: "mqtt-ssl"
     name: mqtt-ssl
   selector:
     app: rabbitmq
-    env: production
+    env: development

@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: rabbitmq
+  name: rabbitmq-dev
   labels:
     app: rabbitmq
-    env: production
+    env: development
 spec:
   template:
     metadata:
       labels:
         app: rabbitmq
-        env: production
+        env: development
     spec:
       nodeSelector:
         app: rabbitmq
@@ -30,6 +30,8 @@ spec:
                 secretKeyRef:
                   name: earlang-cookie
                   key: cookie
+            - name: DEVELOPMENT
+              value: "True"
           volumeMounts:
             - mountPath: /data
               name: data
@@ -42,7 +44,7 @@ spec:
           emptyDir: {}
         - name: ssl
           secret:
-            secretName: rabbitmq-server-ssl
+            secretName: rabbitmq-server-ssl-dev
         - name: ca
           secret:
-            secretName: qold-ca
+            secretName: qold-ca-dev
