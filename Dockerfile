@@ -39,5 +39,8 @@ RUN mkdir -p /ssl/server && \
 
 # Create entrypoint
 ADD config/start-rabbit.sh /usr/bin/
+ADD config/config-rabbit.sh /usr/bin/
 RUN chmod +x /usr/bin/start-rabbit.sh
+RUN chmod +x /usr/bin/config-rabbit.sh
+
 CMD ["start-rabbit.sh"]
