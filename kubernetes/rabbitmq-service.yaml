@@ -8,12 +8,12 @@ metadata:
 spec:
   externalIPs: [139.59.166.134,139.59.166.152]
   ports:
-  - port: 5671
-    name: amqp-ssl
-  - port: 15672
-    name: web-management
-  - port: 8883
-    name: mqtt-ssl
+    - port: 5671
+      name: amqp-ssl
+    - port: 15672
+      name: web-management
+    - port: 8883
+      name: mqtt-ssl
   selector:
     app: rabbitmq
     env: production

@@ -2,9 +2,6 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: rabbitmq
-  labels:
-    app: rabbitmq
-    env: production
 spec:
   template:
     metadata:
