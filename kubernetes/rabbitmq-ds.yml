@@ -39,7 +39,7 @@ spec:
           emptyDir: {}
         - name: ssl
           secret:
-            secretName: rabbitmq-server-ssl
+            secretName: rabbitmq-ssl-server
         - name: ca
           secret:
-            secretName: qold-ca
+            secretName: qold-ssl-ca-cer
